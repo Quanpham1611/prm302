@@ -10,5 +10,17 @@
     <string name="newest_product">Newest product</string>
     <string name="profile">Profile</string>
     <string name="search">Search</string>
+    <string name="sale">Sale</string>
+    <string name="jean">Jean</string>
+    <string name="suit">Suit</string>
+    <string name="shoe">Shoe</string>
+    <string name="vest">Vest</string>
+    <string name="t_shirt">T-shirt</string>
+    <string name="watch">Watch</string>
+    <string name="item">Item</string>
+    <string name="hat">Hat</string>
+    <string name="belt">belt</string>
+    <string name="sandal">Sandal</string>
+    <string name="unisex">Unisex</string>
     <!-- Add other strings as needed -->
 </resources>

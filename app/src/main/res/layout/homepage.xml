@@ -15,11 +15,138 @@
         app:titleTextColor="@android:color/white"
         app:menu="@menu/toolbar_menu"/>
 
-    <!-- ViewFlipper placed below the Toolbar -->
-    <ViewFlipper
-        android:id="@+id/viewFlipper"
+    <!-- ScrollView to make the content below the toolbar scrollable -->
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@id/toolbar" />
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- ViewFlipper placed below the Toolbar -->
+            <ViewFlipper
+                android:id="@+id/viewFlipper"
+                android:layout_width="match_parent"
+                android:layout_height="150dp" />
+
+            <!-- HorizontalScrollView with buttons placed below the ViewFlipper -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- First row of buttons -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            app:cornerRadius="10dp"
+                            android:text="@string/sale" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="5dp"
+                            app:cornerRadius="10dp"
+                            android:text="@string/jean" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="5dp"
+                            app:cornerRadius="10dp"
+                            android:text="@string/suit" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="5dp"
+                            app:cornerRadius="10dp"
+                            android:text="@string/shoe" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="5dp"
+                            app:cornerRadius="10dp"
+                            android:text="@string/vest" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="5dp"
+                            app:cornerRadius="10dp"
+                            android:text="@string/t_shirt" />
+
+                        <!-- Add more buttons as needed -->
+
+                    </LinearLayout>
+
+                    <!-- Second row of buttons -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            app:cornerRadius="10dp"
+                            android:text="@string/watch" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="5dp"
+                            app:cornerRadius="10dp"
+                            android:text="@string/item" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="5dp"
+                            app:cornerRadius="10dp"
+                            android:text="@string/hat" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="5dp"
+                            app:cornerRadius="10dp"
+                            android:text="@string/belt" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="5dp"
+                            app:cornerRadius="10dp"
+                            android:text="@string/sandal" />
+
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="5dp"
+                            app:cornerRadius="10dp"
+                            android:text="@string/unisex" />
+
+                        <!-- Add more buttons as needed -->
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </HorizontalScrollView>
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
