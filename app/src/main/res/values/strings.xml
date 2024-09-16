@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Shopee</string>
+    <string name="find_something">Find something...</string>
+    <string name="cart">Cart</string>
+    <string name="menu">Menu</string>
+    <string name="banner">Banner</string>
+    <string name="flash_sale">Flash Sale</string>
+    <string name="category1">Category 1</string>
+    <string name="flash_sale_item1">Flash Sale Item 1</string>
+    <string name="newest_product">Newest product</string>
+    <string name="profile">Profile</string>
+    <string name="search">Search</string>
+    <!-- Add other strings as needed -->
+</resources>
