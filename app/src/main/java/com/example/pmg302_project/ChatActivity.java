@@ -86,7 +86,7 @@ public class ChatActivity extends AppCompatActivity {
         String message = editTextMessage.getText().toString().trim();
         if (!message.isEmpty()) {
 //            String sender = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-            String sender = "Quan";
+            String sender = "Quan1";
             long timestamp = System.currentTimeMillis();
             ChatMessage chatMessage = new ChatMessage(message, sender, timestamp);
             chatDatabaseReference.push().setValue(chatMessage);
