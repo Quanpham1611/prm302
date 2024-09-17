@@ -17,6 +17,8 @@ import android.widget.ViewFlipper;
 import com.example.pmg302_project.Utils.CartPreferences;
 import com.example.pmg302_project.adapter.ProductAdapter;
 import com.example.pmg302_project.model.Product;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.FirebaseApp;
 import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
@@ -48,10 +50,13 @@ public class HomePageActivity extends AppCompatActivity implements ProductAdapte
     private List<Product> productList = new ArrayList<>();
     private List<Product> cartList = new ArrayList<>();
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homepage); // Đảm bảo bạn có layout cho HomePageActivity
+        FirebaseApp.initializeApp(this);
+
         viewFlipper = findViewById(R.id.viewFlipper);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,6 +70,15 @@ public class HomePageActivity extends AppCompatActivity implements ProductAdapte
         recyclerViewTopProducts.setAdapter(productAdapter);
 
         fetchTopProducts();
+
+        FloatingActionButton fabChat = findViewById(R.id.fabChat);
+        fabChat.setOnClickListener(view -> openChatBubble());
+    }
+
+    private void openChatBubble() {
+        // Code to open the chat bubble
+        Intent intent = new Intent(this, ChatActivity.class);
+        startActivity(intent);
     }
 
     private void fetchTopProducts() {

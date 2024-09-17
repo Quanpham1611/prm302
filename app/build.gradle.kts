@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    id("com.google.gms.google-services") // Apply the Google services plugin
 }
 
 android {
@@ -32,7 +33,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -43,9 +43,13 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     implementation("com.google.android.gms:play-services-auth:20.7.0")
-    implementation ("com.squareup.okhttp3:okhttp:4.9.3")
-    implementation ("com.squareup.picasso:picasso:2.71828")
-    implementation ("com.google.code.gson:gson:2.8.9")
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
+    implementation("com.squareup.picasso:picasso:2.71828")
+    implementation("com.google.code.gson:gson:2.8.9")
 
-
+    implementation(platform("com.google.firebase:firebase-bom:31.0.2"))
+    implementation("com.google.firebase:firebase-database")
+    implementation("com.google.firebase:firebase-auth")
 }
+
+apply(plugin = "com.google.gms.google-services")
