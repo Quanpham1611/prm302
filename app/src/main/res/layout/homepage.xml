@@ -177,9 +177,10 @@
         android:id="@+id/fabChat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
-        android:src="@drawable/backgroundheader_background"
-    app:backgroundTint="@color/facebook_blue" />
+        android:src="@drawable/common_full_open_on_phone"
+        app:backgroundTint="@color/facebook_blue"
+        app:fabSize="normal" />
 </RelativeLayout>
