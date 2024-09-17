@@ -33,6 +33,12 @@
     <string name="total">Thành tiền:</string>
     <string name="quantity">Số lượng</string>
     <string name="your_cart_is_empty">Bạn vẫn chưa mua gì cả!</string>
+    <string name="product_quantity">Product Quantity</string>
+    <string name="Remove">Xóa</string>
+    <string name="checkout">Thanh toán</string>
+    <string name="dot">-----------------------</string>
+    <string name="total_price_0_00">Total Price: $0.00</string>
+    <string name="total_quantity_0">Total Quantity: 0</string>
     <array name="size_options">
         <item>Size S</item>
         <item>Size M</item>

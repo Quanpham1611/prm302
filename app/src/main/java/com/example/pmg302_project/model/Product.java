@@ -8,8 +8,9 @@ public class Product {
     private String imageLink;
     private String type;
     private int purchaseCount;
-
     private double rate;
+    private int quantity; // Add this field
+    private String size;
     // Constructor
     public Product(int id, String name, String description, double price, String imageLink, String type, double rate, int purchaseCount) {
         this.id = id;
@@ -20,6 +21,7 @@ public class Product {
         this.type = type;
         this.rate = rate;
         this.purchaseCount = purchaseCount;
+        this.quantity = quantity;
     }
 
     // Getters
@@ -31,4 +33,8 @@ public class Product {
     public double getRate() { return rate; }
     public int getPurchaseCount() { return purchaseCount; }
     public String getType() { return type; }
+    public int getQuantity() { return quantity; }
+    public String getSize() { return size; }
+    public void setQuantity(int quantity) { this.quantity = quantity; } // Add this setter
+    public void setSize(String size) { this.size = size; }
 }

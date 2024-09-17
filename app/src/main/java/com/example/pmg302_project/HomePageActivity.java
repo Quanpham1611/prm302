@@ -61,7 +61,7 @@ public class HomePageActivity extends AppCompatActivity implements ProductAdapte
         recyclerViewTopProducts = findViewById(R.id.recyclerViewTopProducts);
         recyclerViewTopProducts.setLayoutManager(new LinearLayoutManager(this));
 
-        productAdapter = new ProductAdapter(this, productList, this);
+        productAdapter = new ProductAdapter(this, productList, this, false);
         recyclerViewTopProducts.setAdapter(productAdapter);
 
         fetchTopProducts();
@@ -156,7 +156,7 @@ public class HomePageActivity extends AppCompatActivity implements ProductAdapte
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == 1000012) {
+        if (item.getItemId() == 2131296314) {
             Intent intent = new Intent(this, CartActivity.class);
             startActivity(intent);
             return true;
@@ -223,11 +223,27 @@ public class HomePageActivity extends AppCompatActivity implements ProductAdapte
 
     @Override
     public void onAddToCartClick(Product product, int quantity, String size) {
-        // Add product to cart
-        for (int i = 0; i < quantity; i++) {
+        cartList = CartPreferences.loadCart(this);
+        boolean productExists = false;
+
+        // Check if product already exists in cart
+        for (Product cartProduct : cartList) {
+            if (cartProduct.getId() == product.getId() && cartProduct.getSize().equals(size)) {
+                // Product exists, increase quantity
+                cartProduct.setQuantity(cartProduct.getQuantity() + quantity);
+                productExists = true;
+                break;
+            }
+        }
+
+        // If product does not exist, add to cart with the specified quantity
+        if (!productExists) {
+            product.setQuantity(quantity);
+            product.setSize(size);
             cartList.add(product);
         }
+
         CartPreferences.saveCart(this, cartList); // Save cart to SharedPreferences
-        Toast.makeText(this, product.getName() + " added to cart with quantity: " + quantity + " and size: " + size, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, product.getName() + " added to cart.", Toast.LENGTH_SHORT).show();
     }
 }

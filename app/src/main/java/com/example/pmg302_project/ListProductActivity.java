@@ -2,6 +2,7 @@ package com.example.pmg302_project;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
@@ -56,7 +57,7 @@ public class ListProductActivity extends AppCompatActivity implements ProductAda
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Khởi tạo danh sách sản phẩm (trống) và adapter trước khi fetch data
-        productAdapter = new ProductAdapter(this, productList, this);
+        productAdapter = new ProductAdapter(this, productList, this, false);
         recyclerView.setAdapter(productAdapter);
 
         fetchProduct(productType);
@@ -75,6 +76,7 @@ public class ListProductActivity extends AppCompatActivity implements ProductAda
                 e.printStackTrace();
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
@@ -114,11 +116,28 @@ public class ListProductActivity extends AppCompatActivity implements ProductAda
 
     @Override
     public void onAddToCartClick(Product product, int quantity, String size) {
-        // Add product to cart
-        for (int i = 0; i < quantity; i++) {
+        cartList = CartPreferences.loadCart(this);
+        boolean productExists = false;
+
+        // Check if product already exists in cart
+        for (Product cartProduct : cartList) {
+            if (cartProduct.getId() == product.getId() && cartProduct.getSize().equals(size)) {
+                // Product exists, increase quantity
+                cartProduct.setQuantity(cartProduct.getQuantity() + quantity);
+                productExists = true;
+                break;
+            }
+        }
+
+        // If product does not exist, add to cart with the specified quantity
+        if (!productExists) {
+            product.setQuantity(quantity);
+            product.setSize(size);
             cartList.add(product);
         }
+
         CartPreferences.saveCart(this, cartList); // Save cart to SharedPreferences
-        Toast.makeText(this, product.getName() + " added to cart with quantity: " + quantity + " and size: " + size, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, product.getName() + " added to cart.", Toast.LENGTH_SHORT).show();
     }
+
 }
