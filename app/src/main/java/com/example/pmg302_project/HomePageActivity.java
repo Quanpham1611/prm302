@@ -2,26 +2,33 @@ package com.example.pmg302_project;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
+
+import com.example.pmg302_project.adapter.ProductAdapter;
+import com.example.pmg302_project.model.Product;
 import com.squareup.picasso.Picasso;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -33,7 +40,9 @@ public class HomePageActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ViewFlipper viewFlipper;
     private OkHttpClient client = new OkHttpClient();
-
+    private RecyclerView recyclerViewTopProducts;
+    private ProductAdapter productAdapter;
+    private List<Product> productList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +51,101 @@ public class HomePageActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         fetchImageUrls();
+        setupButtonListeners();
+
+        recyclerViewTopProducts = findViewById(R.id.recyclerViewTopProducts);
+        recyclerViewTopProducts.setLayoutManager(new LinearLayoutManager(this));
+
+        productAdapter = new ProductAdapter(this, productList);
+        recyclerViewTopProducts.setAdapter(productAdapter);
+
+        fetchTopProducts();
+    }
+
+    private void fetchTopProducts() {
+        String url = "http://172.20.109.44:8081/api/top";
+
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        Log.d(TAG, "Sending request to: " + request.url());
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    assert response.body() != null;
+                    String responseData = response.body().string();
+                    try {
+                        Log.d(TAG, "Sending request to: " + request.url());
+                        Log.d(TAG, "body: " + responseData);
+                        JSONArray jsonArray = new JSONArray(responseData);
+                        runOnUiThread(() -> {
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                try {
+                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                    Product product = new Product(
+                                            jsonObject.getInt("id"),
+                                            jsonObject.getString("name"),
+                                            jsonObject.getString("description"),
+                                            jsonObject.getDouble("price"),
+                                            jsonObject.getString("imageLink"),
+                                            jsonObject.getString("type"),
+                                            jsonObject.getDouble("rate"),
+                                            jsonObject.getInt("purchaseCount")
+                                    );
+                                    productList.add(product);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            productAdapter.notifyDataSetChanged();
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
+    private void setupButtonListeners () {
+        Button saleButton = findViewById(R.id.sale);
+        saleButton.setOnClickListener(view -> openListProductActivity("Sale"));
+        Button jeanButton = findViewById(R.id.jean);
+        jeanButton.setOnClickListener(view -> openListProductActivity("Jean"));
+        Button suitButton = findViewById(R.id.suit);
+        suitButton.setOnClickListener(view -> openListProductActivity("Suit"));
+        Button shoeButton = findViewById(R.id.shoe);
+        shoeButton.setOnClickListener(view -> openListProductActivity("Shoe"));
+        Button vestButton = findViewById(R.id.vest);
+        vestButton.setOnClickListener(view -> openListProductActivity("Vest"));
+        Button shirtButton = findViewById(R.id.t_shirt);
+        shirtButton.setOnClickListener(view -> openListProductActivity("T-Shirt"));
+        Button watchButton = findViewById(R.id.watch);
+        watchButton.setOnClickListener(view -> openListProductActivity("Watch"));
+        Button hatButton = findViewById(R.id.hat);
+        hatButton.setOnClickListener(view -> openListProductActivity("Hat"));
+        Button beltButton = findViewById(R.id.belt);
+        beltButton.setOnClickListener(view -> openListProductActivity("Belt"));
+        Button itemButton = findViewById(R.id.item);
+        itemButton.setOnClickListener(view -> openListProductActivity("Item"));
+        Button sandalButton = findViewById(R.id.sandal);
+        sandalButton.setOnClickListener(view -> openListProductActivity("Sandal"));
+        Button unisexButton = findViewById(R.id.unisex);
+        unisexButton.setOnClickListener(view -> openListProductActivity("Unisex"));
+
+    }
+
+    private void openListProductActivity(String productType) {
+        Intent intent = new Intent(this, ListProductActivity.class);
+        intent.putExtra("PRODUCT_TYPE", productType);
+        startActivity(intent);
     }
 
     @Override

@@ -50,12 +50,14 @@
                         android:orientation="horizontal">
 
                         <Button
+                            android:id="@+id/sale"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             app:cornerRadius="10dp"
                             android:text="@string/sale" />
 
                         <Button
+                            android:id="@+id/jean"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:layout_marginStart="5dp"
@@ -63,6 +65,7 @@
                             android:text="@string/jean" />
 
                         <Button
+                            android:id="@+id/suit"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:layout_marginStart="5dp"
@@ -70,6 +73,7 @@
                             android:text="@string/suit" />
 
                         <Button
+                            android:id="@+id/shoe"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:layout_marginStart="5dp"
@@ -77,6 +81,7 @@
                             android:text="@string/shoe" />
 
                         <Button
+                            android:id="@+id/vest"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:layout_marginStart="5dp"
@@ -84,14 +89,12 @@
                             android:text="@string/vest" />
 
                         <Button
+                            android:id="@+id/t_shirt"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:layout_marginStart="5dp"
                             app:cornerRadius="10dp"
                             android:text="@string/t_shirt" />
-
-                        <!-- Add more buttons as needed -->
-
                     </LinearLayout>
 
                     <!-- Second row of buttons -->
@@ -101,12 +104,14 @@
                         android:orientation="horizontal">
 
                         <Button
+                            android:id="@+id/watch"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             app:cornerRadius="10dp"
                             android:text="@string/watch" />
 
                         <Button
+                            android:id="@+id/item"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:layout_marginStart="5dp"
@@ -114,6 +119,7 @@
                             android:text="@string/item" />
 
                         <Button
+                            android:id="@+id/hat"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:layout_marginStart="5dp"
@@ -121,6 +127,7 @@
                             android:text="@string/hat" />
 
                         <Button
+                            android:id="@+id/belt"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:layout_marginStart="5dp"
@@ -128,6 +135,7 @@
                             android:text="@string/belt" />
 
                         <Button
+                            android:id="@+id/sandal"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:layout_marginStart="5dp"
@@ -135,18 +143,34 @@
                             android:text="@string/sandal" />
 
                         <Button
+                            android:id="@+id/unisex"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
                             android:layout_marginStart="5dp"
                             app:cornerRadius="10dp"
                             android:text="@string/unisex" />
-
-                        <!-- Add more buttons as needed -->
-
                     </LinearLayout>
-
                 </LinearLayout>
             </HorizontalScrollView>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp">
+                <TextView
+                    android:textColor="@color/facebook_blue"
+                    android:text="@string/best_seller"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewTopProducts"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp" />
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
