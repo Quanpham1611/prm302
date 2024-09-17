@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Shopee</string>
+    <string name="app_name">Shop House</string>
     <string name="find_something">Find something...</string>
     <string name="cart">Cart</string>
     <string name="menu">Menu</string>
@@ -25,9 +25,19 @@
     <string name="product_description">Product Description</string>
     <string name="product_price">Product Price</string>
     <string name="product_name">Product Name</string>
-    <string name="add_to_cart">Thêm vào giỏ hàng</string>
+    <string name="add_to_cart">Thêm vào giỏ</string>
     <string name="best_seller">Best Seller</string>
     <string name="rate">Rate:</string>
     <string name="purchase_count">Purchase count:</string>
+    <string name="detail">Xem chi tiết</string>
+    <string name="total">Thành tiền:</string>
+    <string name="quantity">Số lượng</string>
+    <string name="your_cart_is_empty">Bạn vẫn chưa mua gì cả!</string>
+    <array name="size_options">
+        <item>Size S</item>
+        <item>Size M</item>
+        <item>Size L</item>
+        <item>Size XL</item>
+    </array>
     <!-- Add other strings as needed -->
 </resources>

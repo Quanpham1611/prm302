@@ -5,12 +5,14 @@ import static android.content.ContentValues.TAG;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar; // Correct import
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.pmg302_project.Utils.CartPreferences;
 import com.example.pmg302_project.adapter.ProductAdapter;
 import com.example.pmg302_project.model.Product;
 
@@ -28,11 +30,12 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ListProductActivity extends AppCompatActivity {
+public class ListProductActivity extends AppCompatActivity implements ProductAdapter.OnAddToCartClickListener {
     private Toolbar toolbar;
     OkHttpClient client = new OkHttpClient();
     private ProductAdapter productAdapter;
     private List<Product> productList = new ArrayList<>();
+    private List<Product> cartList = new ArrayList<>();
     private RecyclerView recyclerView;
 
     @Override
@@ -53,7 +56,7 @@ public class ListProductActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Khởi tạo danh sách sản phẩm (trống) và adapter trước khi fetch data
-        productAdapter = new ProductAdapter(this, productList);
+        productAdapter = new ProductAdapter(this, productList, this);
         recyclerView.setAdapter(productAdapter);
 
         fetchProduct(productType);
@@ -107,5 +110,15 @@ public class ListProductActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    public void onAddToCartClick(Product product, int quantity, String size) {
+        // Add product to cart
+        for (int i = 0; i < quantity; i++) {
+            cartList.add(product);
+        }
+        CartPreferences.saveCart(this, cartList); // Save cart to SharedPreferences
+        Toast.makeText(this, product.getName() + " added to cart with quantity: " + quantity + " and size: " + size, Toast.LENGTH_SHORT).show();
     }
 }

@@ -8,10 +8,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.example.pmg302_project.Utils.CartPreferences;
 import com.example.pmg302_project.adapter.ProductAdapter;
 import com.example.pmg302_project.model.Product;
 import com.squareup.picasso.Picasso;
@@ -36,13 +39,15 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class HomePageActivity extends AppCompatActivity {
+public class HomePageActivity extends AppCompatActivity implements ProductAdapter.OnAddToCartClickListener {
     private Toolbar toolbar;
     private ViewFlipper viewFlipper;
     private OkHttpClient client = new OkHttpClient();
     private RecyclerView recyclerViewTopProducts;
     private ProductAdapter productAdapter;
     private List<Product> productList = new ArrayList<>();
+    private List<Product> cartList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +61,7 @@ public class HomePageActivity extends AppCompatActivity {
         recyclerViewTopProducts = findViewById(R.id.recyclerViewTopProducts);
         recyclerViewTopProducts.setLayoutManager(new LinearLayoutManager(this));
 
-        productAdapter = new ProductAdapter(this, productList);
+        productAdapter = new ProductAdapter(this, productList, this);
         recyclerViewTopProducts.setAdapter(productAdapter);
 
         fetchTopProducts();
@@ -148,6 +153,17 @@ public class HomePageActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == 1000012) {
+            Intent intent = new Intent(this, CartActivity.class);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -203,5 +219,15 @@ public class HomePageActivity extends AppCompatActivity {
         viewFlipper.setFlipInterval(3000); // 3 seconds
         viewFlipper.setAutoStart(true);
         viewFlipper.startFlipping();
+    }
+
+    @Override
+    public void onAddToCartClick(Product product, int quantity, String size) {
+        // Add product to cart
+        for (int i = 0; i < quantity; i++) {
+            cartList.add(product);
+        }
+        CartPreferences.saveCart(this, cartList); // Save cart to SharedPreferences
+        Toast.makeText(this, product.getName() + " added to cart with quantity: " + quantity + " and size: " + size, Toast.LENGTH_SHORT).show();
     }
 }

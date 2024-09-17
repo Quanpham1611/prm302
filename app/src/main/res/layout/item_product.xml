@@ -46,6 +46,12 @@
             android:layout_height="wrap_content"
             android:text="@string/purchase_count"
             android:textSize="14sp" />
+        <TextView
+            android:id="@+id/productRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/rate"
+            android:textSize="14sp" />
 
     </LinearLayout>
     <LinearLayout
@@ -54,15 +60,14 @@
         android:layout_height="wrap_content">
         <Button
             android:id="@+id/button"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="40dp"
             android:text="@string/add_to_cart" />
-        <TextView
-            android:id="@+id/productRate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rate"
-            android:textSize="14sp" />
+        <Button
+            android:id="@+id/detail"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:text="@string/detail" />
 
     </LinearLayout>
 
