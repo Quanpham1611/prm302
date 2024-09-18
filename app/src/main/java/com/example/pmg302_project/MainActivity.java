@@ -21,6 +21,7 @@ import android.util.Log;
 
 import android.view.View;
 
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQ_ONE_TAP = 100;
     private OkHttpClient client = new OkHttpClient();
     private EditText editTextEmail, editTextPassword;
-
+    Button landingPage;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,12 @@ public class MainActivity extends AppCompatActivity {
 
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
+        landingPage = findViewById(R.id.button4);
+    }
+
+    public void onLandingPageClicked(View view) {
+        Intent intent = new Intent(MainActivity.this, LandingPageActivity.class);
+        startActivity(intent);
     }
 
     public void buttonGoogleSignIn(View view) {

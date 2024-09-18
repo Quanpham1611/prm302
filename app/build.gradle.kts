@@ -50,6 +50,9 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:31.0.2"))
     implementation("com.google.firebase:firebase-database")
     implementation("com.google.firebase:firebase-auth")
+    implementation ("org.osmdroid:osmdroid-android:6.1.10")
+    implementation ("androidx.cardview:cardview:1.0.0")
+
 }
 
 apply(plugin = "com.google.gms.google-services")

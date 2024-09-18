@@ -1,10 +1,12 @@
 package com.example.pmg302_project;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.StrictMode;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.pmg302_project.adapter.ChatAdapter;
 import com.example.pmg302_project.model.ChatMessage;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,6 +30,8 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView recyclerViewChat;
     private EditText editTextMessage;
     private Button buttonSend;
+    private Button buttonLogin;
+    private TextView textViewLoginPrompt;
     private DatabaseReference chatDatabaseReference;
     private List<ChatMessage> chatMessages;
     private ChatAdapter chatAdapter;
@@ -45,6 +48,8 @@ public class ChatActivity extends AppCompatActivity {
         recyclerViewChat = findViewById(R.id.recyclerViewChat);
         editTextMessage = findViewById(R.id.editTextMessage);
         buttonSend = findViewById(R.id.buttonSend);
+        buttonLogin = findViewById(R.id.buttonLogin);
+        textViewLoginPrompt = findViewById(R.id.textViewLoginPrompt);
 
         chatMessages = new ArrayList<>();
         chatAdapter = new ChatAdapter(chatMessages);
@@ -53,40 +58,50 @@ public class ChatActivity extends AppCompatActivity {
 
         chatDatabaseReference = FirebaseDatabase.getInstance().getReference("chats");
 
-        buttonSend.setOnClickListener(v -> sendMessage());
+        String username = InMemoryStorage.get("username");
+        if (username == null || username.isEmpty()) {
+            textViewLoginPrompt.setVisibility(View.VISIBLE);
+            buttonLogin.setVisibility(View.VISIBLE);
+            buttonSend.setEnabled(false);
 
-        chatDatabaseReference.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String previousChildName) {
-                ChatMessage chatMessage = dataSnapshot.getValue(ChatMessage.class);
-                chatMessages.add(chatMessage);
-                chatAdapter.notifyItemInserted(chatMessages.size() - 1);
-                recyclerViewChat.scrollToPosition(chatMessages.size() - 1);
-            }
+            buttonLogin.setOnClickListener(v -> {
+                Intent intent = new Intent(ChatActivity.this, MainActivity.class);
+                startActivity(intent);
+            });
+        } else {
+            buttonSend.setOnClickListener(v -> sendMessage(username));
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String previousChildName) {
-            }
+            chatDatabaseReference.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String previousChildName) {
+                    ChatMessage chatMessage = dataSnapshot.getValue(ChatMessage.class);
+                    chatMessages.add(chatMessage);
+                    chatAdapter.notifyItemInserted(chatMessages.size() - 1);
+                    recyclerViewChat.scrollToPosition(chatMessages.size() - 1);
+                }
 
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-            }
+                @Override
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String previousChildName) {
+                }
 
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String previousChildName) {
-            }
+                @Override
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
+                @Override
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String previousChildName) {
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
+        }
     }
 
-    private void sendMessage() {
+    private void sendMessage(String sender) {
         String message = editTextMessage.getText().toString().trim();
         if (!message.isEmpty()) {
-//            String sender = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
-            String sender = "Quan1";
             long timestamp = System.currentTimeMillis();
             ChatMessage chatMessage = new ChatMessage(message, sender, timestamp);
             chatDatabaseReference.push().setValue(chatMessage);
