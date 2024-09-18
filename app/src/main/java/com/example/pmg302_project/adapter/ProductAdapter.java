@@ -3,6 +3,7 @@ package com.example.pmg302_project.adapter;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.pmg302_project.CartActivity;
+import com.example.pmg302_project.ProductDetailActivity;
 import com.example.pmg302_project.R;
 import com.example.pmg302_project.Utils.CartPreferences;
 import com.example.pmg302_project.model.Product;
@@ -81,6 +83,19 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             productHolder.productPurchase.setText("Lượt mua: " + product.getPurchaseCount());
             Picasso.get().load(product.getImageLink()).into(productHolder.productImage);
             productHolder.addToCartButton.setOnClickListener(v -> showAddToCartDialog(product));
+
+            // Set click listener for detailButton
+            productHolder.detailButton.setOnClickListener(v -> {
+                Intent intent = new Intent(context, ProductDetailActivity.class);
+                intent.putExtra("productId", product.getId());
+                intent.putExtra("name", product.getName());
+                intent.putExtra("imageLink", product.getImageLink());
+                intent.putExtra("price", product.getPrice());
+                intent.putExtra("rate", product.getRate());
+                intent.putExtra("purchaseCount", product.getPurchaseCount());
+                intent.putExtra("description", product.getDescription());
+                context.startActivity(intent);
+            });
         }
     }
 
@@ -128,6 +143,7 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         TextView productRate;
         TextView productPurchase;
         Button addToCartButton;
+        Button detailButton; // Add reference to detailButton
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -138,6 +154,7 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             productRate = itemView.findViewById(R.id.productRate);
             productPurchase = itemView.findViewById(R.id.productPurchase);
             addToCartButton = itemView.findViewById(R.id.button);
+            detailButton = itemView.findViewById(R.id.detailButton); // Initialize detailButton
         }
     }
 
@@ -145,7 +162,6 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         ImageView cartProductImage;
         TextView cartProductName;
         TextView cartProductPrice;
-        TextView cartProductDescription;
         TextView cartProductSize;
         TextView cartProductQuantity;
         Button removeFromCartButton;
@@ -155,7 +171,6 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             cartProductImage = itemView.findViewById(R.id.cartProductImage);
             cartProductName = itemView.findViewById(R.id.cartProductName);
             cartProductPrice = itemView.findViewById(R.id.cartProductPrice);
-//            cartProductDescription = itemView.findViewById(R.id.cartProductDescription);
             cartProductSize = itemView.findViewById(R.id.cartProductSize);
             cartProductQuantity = itemView.findViewById(R.id.cartProductQuantity);
             removeFromCartButton = itemView.findViewById(R.id.removeFromCartButton);

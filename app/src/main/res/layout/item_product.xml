@@ -64,7 +64,7 @@
             android:layout_height="40dp"
             android:text="@string/add_to_cart" />
         <Button
-            android:id="@+id/detail"
+            android:id="@+id/detailButton"
             android:layout_width="150dp"
             android:layout_height="40dp"
             android:text="@string/detail" />
