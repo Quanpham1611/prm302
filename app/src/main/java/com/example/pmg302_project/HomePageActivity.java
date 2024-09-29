@@ -24,6 +24,7 @@ import com.squareup.picasso.Picasso;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -41,6 +42,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import androidx.drawerlayout.widget.DrawerLayout;
+import com.google.android.material.navigation.NavigationView;
+
 public class HomePageActivity extends AppCompatActivity implements ProductAdapter.OnAddToCartClickListener {
     private Toolbar toolbar;
     private ViewFlipper viewFlipper;
@@ -49,6 +53,8 @@ public class HomePageActivity extends AppCompatActivity implements ProductAdapte
     private ProductAdapter productAdapter;
     private List<Product> productList = new ArrayList<>();
     private List<Product> cartList = new ArrayList<>();
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -56,10 +62,31 @@ public class HomePageActivity extends AppCompatActivity implements ProductAdapte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.homepage); // Đảm bảo bạn có layout cho HomePageActivity
         FirebaseApp.initializeApp(this);
+        // Initialize drawer layout and navigation view
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
 
         viewFlipper = findViewById(R.id.viewFlipper);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        // Set up navigation item selected listener
+        navigationView.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case 1000049:
+                    Toast.makeText(HomePageActivity.this, "Profile selected", Toast.LENGTH_SHORT).show();
+                    break;
+                case 1000000:
+                    Toast.makeText(HomePageActivity.this, "Settings selected", Toast.LENGTH_SHORT).show();
+                    break;
+                case 1000066:
+                    Toast.makeText(HomePageActivity.this, "Logout selected", Toast.LENGTH_SHORT).show();
+                    break;
+            }
+            drawerLayout.closeDrawer(GravityCompat.START);
+            return true;
+        });
+
         fetchImageUrls();
         setupButtonListeners();
 
@@ -74,6 +101,7 @@ public class HomePageActivity extends AppCompatActivity implements ProductAdapte
         FloatingActionButton fabChat = findViewById(R.id.fabChat);
         fabChat.setOnClickListener(view -> openChatBubble());
     }
+
 
     private void openChatBubble() {
         // Code to open the chat bubble
@@ -173,6 +201,10 @@ public class HomePageActivity extends AppCompatActivity implements ProductAdapte
         if (item.getItemId() == 2131296314) {
             Intent intent = new Intent(this, CartActivity.class);
             startActivity(intent);
+            return true;
+        }
+        if (item.getItemId() == R.id.action_profile) {
+            drawerLayout.openDrawer(GravityCompat.START);
             return true;
         }
         return super.onOptionsItemSelected(item);

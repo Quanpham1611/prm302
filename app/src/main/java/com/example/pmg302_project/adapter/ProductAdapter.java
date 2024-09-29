@@ -108,7 +108,7 @@ public class ProductAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         void onAddToCartClick(Product product, int quantity, String size);
     }
 
-    private void showAddToCartDialog(Product product) {
+    public void showAddToCartDialog(Product product) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_add_to_cart, null);
         builder.setView(dialogView);
